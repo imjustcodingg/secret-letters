@@ -11,10 +11,23 @@ window.addEventListener("mousemove", function (e) {
   moveCursor(e.clientX, e.clientY);
 });
 
-// TOUCH SUPPORT
-window.addEventListener("touchmove", function (e) {
+// TOUCH SUPPORT WITH SMOOTHER MOVEMENT
+window.addEventListener("touchstart", function (e) {
   if (e.touches.length > 0) {
-    const touch = e.touches[0]; // GET FIRST TOUCH POINT
+    e.preventDefault(); // PREVENT DEFAULT TOUCH BEHAVIOR
+    const touch = e.touches[0];
     moveCursor(touch.clientX, touch.clientY);
   }
+}, { passive: false });
+
+window.addEventListener("touchmove", function (e) {
+  if (e.touches.length > 0) {
+    e.preventDefault(); // PREVENT SCROLLING WHILE MOVING
+    const touch = e.touches[0];
+    moveCursor(touch.clientX, touch.clientY);
+  }
+}, { passive: false });
+
+window.addEventListener("touchend", function (e) {
+  e.preventDefault();
 });
